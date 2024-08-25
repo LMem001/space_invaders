@@ -1,30 +1,51 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq7y8j31iakov"]
+[gd_scene load_steps=6 format=3 uid="uid://bq7y8j31iakov"]
 
 [ext_resource type="PackedScene" uid="uid://hem7t12jskqw" path="res://src/scenes/player.tscn" id="1_0ppje"]
+[ext_resource type="Script" path="res://src/scripts/enemies.gd" id="2_psac7"]
+[ext_resource type="PackedScene" uid="uid://dnct6ygo7nvl8" path="res://src/scenes/red_enemy.tscn" id="3_5yt57"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk8g0"]
 size = Vector2(45, 649)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lceyx"]
+size = Vector2(22, 653)
+
 [node name="Space_Invaders" type="Node2D"]
 position = Vector2(1, 1)
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+[node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-25, 319)
 shape = SubResource("RectangleShape2D_fk8g0")
 
-[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+[node name="WallRight" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1174, 323)
 shape = SubResource("RectangleShape2D_fk8g0")
+
+[node name="WallRitghtArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRitghtArea"]
+position = Vector2(1160, 324)
+shape = SubResource("RectangleShape2D_lceyx")
+debug_color = Color(0.98805, 0, 0.306323, 0.42)
+
+[node name="WallLeftArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeftArea"]
+position = Vector2(-9, 323)
+shape = SubResource("RectangleShape2D_lceyx")
+debug_color = Color(0.98805, 0, 0.306323, 0.42)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_0ppje")]
@@ -33,3 +54,14 @@ scale = Vector2(1, 1)
 
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2(582, 205)
+script = ExtResource("2_psac7")
+
+[node name="RedEnemy" parent="Enemies" groups=["gEnemy"] instance=ExtResource("3_5yt57")]
+
+[node name="MoveDownTimer" type="Timer" parent="Enemies"]
+unique_name_in_owner = true
+wait_time = 0.578
+
+[connection signal="body_entered" from="WallRitghtArea" to="Enemies" method="_on_wall_ritght_area_body_entered"]
+[connection signal="body_entered" from="WallLeftArea" to="Enemies" method="_on_wall_left_area_body_entered"]
+[connection signal="timeout" from="Enemies/MoveDownTimer" to="Enemies" method="_on_move_down_timer_timeout"]
