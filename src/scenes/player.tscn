@@ -10,12 +10,12 @@ script = ExtResource("1_0d5bi")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ibh28")
 
-[node name="ShootingPoint" type="Marker2D" parent="Sprite2D"]
-unique_name_in_owner = true
-position = Vector2(0, -8.66667)
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(6, -9, 6, -3, 24, -3, 24, 3, 30, 3, 30, 15, -30, 15, -30, 3, -24, 3, -24, -3, -6, -3, -6, -9)
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -8.66667)
 
 [node name="ShotTimer" type="Timer" parent="."]
 unique_name_in_owner = true

@@ -24,8 +24,8 @@ func _move_direction():
 func shot():
 	var bullet = preload("res://src/scenes/bullet_player.tscn")
 	var new_bullet = bullet.instantiate()
-	new_bullet.position = %ShootingPoint.position
-	%ShootingPoint.add_child(new_bullet)
+	new_bullet.position = %ShootingPoint.global_position
+	get_tree().root.add_child(new_bullet)
 
 func reset_player():
 	position = initial_position
