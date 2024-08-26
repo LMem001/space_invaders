@@ -55,8 +55,7 @@ scale = Vector2(1, 1)
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2(582, 205)
 script = ExtResource("2_psac7")
-
-[node name="RedEnemy" parent="Enemies" groups=["gEnemy"] instance=ExtResource("3_5yt57")]
+red_enemy_scene = ExtResource("3_5yt57")
 
 [node name="MoveDownTimer" type="Timer" parent="Enemies"]
 unique_name_in_owner = true

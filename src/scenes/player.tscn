@@ -15,7 +15,7 @@ polygon = PackedVector2Array(6, -9, 6, -3, 24, -3, 24, 3, 30, 3, 30, 15, -30, 15
 
 [node name="ShootingPoint" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -8.66667)
+position = Vector2(0, -14)
 
 [node name="ShotTimer" type="Timer" parent="."]
 unique_name_in_owner = true
