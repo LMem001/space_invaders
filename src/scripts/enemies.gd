@@ -1,10 +1,15 @@
 extends Node2D
 
 @export var red_enemy_scene : PackedScene  # enemy package
+@export var yellow_enemy_scene : PackedScene  # enemy package
+@export var green_enemy_scene : PackedScene  # enemy package
+@export var bullet_scene : PackedScene  # Bullet package
 var enemy_speed : float = 100.0
 var velocity = Vector2(180, 0)
 var bCollidedRight = false
-var num_red_enemies = 10
+var num_red_enemies = 20
+var num_yellow_enemies = 20
+var num_green_enemies = 20
 
 func _physics_process(delta):
 	position += velocity * delta
@@ -14,16 +19,18 @@ func _physics_process(delta):
 
 func _ready():
 	# Aggiungi nemici all'avvio della scena
-	add_enemies(num_red_enemies)
+	add_enemies(red_enemy_scene, num_red_enemies, 100)
+	add_enemies(yellow_enemy_scene, num_yellow_enemies, 50)
+	add_enemies(green_enemy_scene, num_green_enemies, 0)
 
 func _move_down ():
 	velocity = Vector2(0, 90)
 	%MoveDownTimer.start()
 	
-func add_enemies(count):
+func add_enemies(enemy_scene, count, y_position):
 	for i in range(count):
-		var enemy_instance = red_enemy_scene.instantiate() 
-		enemy_instance.position = Vector2(100 + i * 50, 100) 
+		var enemy_instance = enemy_scene.instantiate() 
+		enemy_instance.position = Vector2(100 + i * 50, y_position) 
 		add_child(enemy_instance)
 
 func _on_wall_ritght_area_body_entered(body):
@@ -36,8 +43,20 @@ func _on_wall_left_area_body_entered(body):
 		bCollidedRight = false
 		_move_down()
 
+func fire_bullet(start_position: Vector2):
+	var bullet_instance = bullet_scene.instantiate()  # Crea un'istanza del proiettile
+	bullet_instance.position = start_position
+	add_child(bullet_instance)  # Aggiungi il proiettile alla scena
+	bullet_instance.velocity = Vector2(0, 300)  # Imposta la velocità del proiettile
+
 func _on_move_down_timer_timeout():
 	if bCollidedRight: 
 		velocity = Vector2(-180, 0)
 	else:
 		velocity = Vector2(180, 0)
+
+func _on_shooting_timer_timeout():
+	var enemies = get_tree().get_nodes_in_group("gEnemy")
+	if enemies.size() > 0:
+		var random_enemy = enemies[randi() % enemies.size()]  # select random enemy
+		fire_bullet(random_enemy.position)  

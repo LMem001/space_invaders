@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bth1jrpmkewaw"]
+
+[ext_resource type="PackedScene" uid="uid://dnct6ygo7nvl8" path="res://src/scenes/red_enemy.tscn" id="1_2fba3"]
+[ext_resource type="Texture2D" uid="uid://d2xcf8wwrlgfj" path="res://images/yellow.png" id="2_1lrdw"]
+
+[node name="YellowEnemy" instance=ExtResource("1_2fba3")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_1lrdw")
+
+[node name="CollisionPolygon2D" parent="." index="1"]
+polygon = PackedVector2Array(16, -8, 20, 4, 12, 16, 8, 16, 4, 12, 4, 8, -4, 8, -4, 12, -8, 16, -12, 16, -18, 9, -20, 0, -14, -7, -12, -16, 0, -8, 12, -16)

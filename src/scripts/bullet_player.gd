@@ -1,12 +1,13 @@
 extends Area2D
 
 var travelled_distance = 0
+var velocity = Vector2.ZERO
 
 func _physics_process(delta):
 	const speed = 1000
 	const weapon_range = 1200
-	var direction = _bullet_direction()
-	position += direction * speed * delta
+	var velocity = _bullet_direction()
+	position += velocity * speed * delta
 	
 	travelled_distance += speed * delta
 	if travelled_distance > weapon_range: 
@@ -14,7 +15,7 @@ func _physics_process(delta):
 
 func _bullet_direction():
 	return Vector2(0,-1)
-
+	
 func _on_body_entered(body):
 	queue_free()
 	if body.has_method("_take_damage"):

@@ -9,3 +9,7 @@ texture = ExtResource("1_1vror")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(16, -8, 20, 4, 20, 12, 14, 16, 4, 8, 4, 12, -4, 12, -4, 8, -12, 12, -12, 16, -20, 12, -20, -4, -16, -8, -12, -12, 12, -12)
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 16)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt7pjdavcgqmh"]
+
+[ext_resource type="PackedScene" uid="uid://dv1bpi8cy05x5" path="res://src/scenes/bullet_player.tscn" id="1_vdavh"]
+[ext_resource type="Script" path="res://src/scripts/bullet_enemy.gd" id="2_kmx50"]
+
+[node name="Bullet_Enemy" instance=ExtResource("1_vdavh")]
+modulate = Color(1, 0.0185676, 0.0897703, 1)
+script = ExtResource("2_kmx50")
+
+[node name="CollisionShape2D" parent="." index="1"]
+debug_color = Color(0, 0.600378, 0.697819, 0.42)
