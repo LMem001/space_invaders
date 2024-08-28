@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bq7y8j31iakov"]
+[gd_scene load_steps=11 format=3 uid="uid://bq7y8j31iakov"]
 
 [ext_resource type="PackedScene" uid="uid://hem7t12jskqw" path="res://src/scenes/player.tscn" id="1_0ppje"]
+[ext_resource type="Script" path="res://src/scripts/space_invaders.gd" id="1_pj881"]
 [ext_resource type="Script" path="res://src/scripts/enemies.gd" id="2_psac7"]
 [ext_resource type="PackedScene" uid="uid://dnct6ygo7nvl8" path="res://src/scenes/red_enemy.tscn" id="3_5yt57"]
 [ext_resource type="PackedScene" uid="uid://bth1jrpmkewaw" path="res://src/scenes/yellow_enemy.tscn" id="4_jxh03"]
 [ext_resource type="PackedScene" uid="uid://d6mvuoeq84a2" path="res://src/scenes/green_enemy.tscn" id="5_lmi55"]
 [ext_resource type="PackedScene" uid="uid://bt7pjdavcgqmh" path="res://src/scenes/bullet_enemy.tscn" id="6_c6ptg"]
+[ext_resource type="FontFile" uid="uid://b54v613pddiyh" path="res://assets/fonts/Kenney Future.ttf" id="7_iuw7u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk8g0"]
 size = Vector2(45, 902.5)
@@ -15,6 +17,7 @@ size = Vector2(32, 898.5)
 
 [node name="Space_Invaders" type="Node2D"]
 position = Vector2(1, 1)
+script = ExtResource("1_pj881")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -73,10 +76,56 @@ wait_time = 0.578
 
 [node name="ShootingTimer" type="Timer" parent="Enemies"]
 unique_name_in_owner = true
-wait_time = 0.334
+wait_time = 0.4
 autostart = true
+
+[node name="Pause" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+offset_right = 1401.0
+offset_bottom = 900.0
+color = Color(0.180392, 0.180392, 0.180392, 0.85098)
+
+[node name="DescriptionLabel" type="Label" parent="Pause/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 610.0
+offset_top = 271.0
+offset_right = 825.0
+offset_bottom = 330.0
+theme_override_fonts/font = ExtResource("7_iuw7u")
+theme_override_font_sizes/font_size = 30
+text = "Game over"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Pause"]
+offset_left = 512.0
+offset_top = 371.0
+offset_right = 905.0
+offset_bottom = 562.0
+theme_override_constants/v_separation = 20
+
+[node name="ContinueButton" type="Button" parent="Pause/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_iuw7u")
+text = "Continue"
+
+[node name="RestartButton" type="Button" parent="Pause/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(393, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_iuw7u")
+text = "Restart"
 
 [connection signal="body_entered" from="WallRitghtArea" to="Enemies" method="_on_wall_ritght_area_body_entered"]
 [connection signal="body_entered" from="WallLeftArea" to="Enemies" method="_on_wall_left_area_body_entered"]
 [connection signal="timeout" from="Enemies/MoveDownTimer" to="Enemies" method="_on_move_down_timer_timeout"]
 [connection signal="timeout" from="Enemies/ShootingTimer" to="Enemies" method="_on_shooting_timer_timeout"]
+[connection signal="pressed" from="Pause/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Pause/GridContainer/RestartButton" to="." method="_on_restart_button_pressed"]
