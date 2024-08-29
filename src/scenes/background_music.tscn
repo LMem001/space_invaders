@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://byh4denvncv4e"]
+
+[ext_resource type="AudioStream" uid="uid://doxgg83cku4o2" path="res://assets/sounds/Spider_dance.mp3" id="1_8uq1o"]
+
+[node name="Background_Music" type="AudioStreamPlayer"]
+process_mode = 3
+stream = ExtResource("1_8uq1o")
+volume_db = -31.856
+autoplay = true

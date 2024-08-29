@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/scripts/player.gd" id="1_0d5bi"]
 [ext_resource type="Texture2D" uid="uid://dgp6s6ia4pl2x" path="res://assets/images/player.png" id="2_jquew"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_0d5bi")
 
@@ -15,7 +15,7 @@ polygon = PackedVector2Array(6, -9, 6, -3, 24, -3, 24, 3, 30, 3, 30, 15, -30, 15
 
 [node name="ShootingPoint" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -14)
+position = Vector2(0, -16)
 
 [node name="ShotTimer" type="Timer" parent="."]
 unique_name_in_owner = true

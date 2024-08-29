@@ -4,8 +4,10 @@ extends Node2D
 @export var yellow_enemy_scene : PackedScene  # enemy package
 @export var green_enemy_scene : PackedScene  # enemy package
 @export var bullet_scene : PackedScene  # Bullet package
+var bx_positive = true
 var enemy_speed : float = 100.0
-var velocity = Vector2(180, 0)
+var e_speed = 100
+var velocity = Vector2(e_speed, 0)
 var bCollidedRight = false
 var num_red_enemies = 20
 var num_yellow_enemies = 20
@@ -24,7 +26,8 @@ func _ready():
 	add_enemies(green_enemy_scene, num_green_enemies, 0)
 
 func _move_down ():
-	velocity = Vector2(0, 90)
+	bx_positive = false
+	velocity = Vector2(0, 100)
 	%MoveDownTimer.start()
 	
 func add_enemies(enemy_scene, count, y_position):
@@ -33,15 +36,10 @@ func add_enemies(enemy_scene, count, y_position):
 		enemy_instance.position = Vector2(100 + i * 50, y_position) 
 		add_child(enemy_instance)
 
-func _on_wall_ritght_area_body_entered(body):
-	if body.is_in_group("gEnemy") && !bCollidedRight:
-		bCollidedRight = true
-		_move_down()
-
-func _on_wall_left_area_body_entered(body):
-	if body.is_in_group("gEnemy") && bCollidedRight:
-		bCollidedRight = false
-		_move_down()
+func _increase_speed():
+	e_speed = e_speed + 3 if e_speed > 0 else e_speed - 3
+	if bx_positive == true:
+		velocity = Vector2(e_speed, 0)
 
 func fire_bullet(start_position: Vector2):
 	var bullet_instance = bullet_scene.instantiate()  # Crea un'istanza del proiettile
@@ -49,11 +47,22 @@ func fire_bullet(start_position: Vector2):
 	add_child(bullet_instance)  # Aggiungi il proiettile alla scena
 	bullet_instance.velocity = Vector2(0, 300)  # Imposta la velocità del proiettile
 
+func _on_wall_ritght_area_body_entered(body):
+	if body.is_in_group("gEnemy") && !bCollidedRight:
+		bCollidedRight = true
+		_move_down()
+
+func _on_wall_left_area_body_entered(body):
+	if body.is_in_group("gEnemy") && !bCollidedRight:
+		bCollidedRight = true
+		_move_down()
+
 func _on_move_down_timer_timeout():
 	if bCollidedRight: 
-		velocity = Vector2(-180, 0)
-	else:
-		velocity = Vector2(180, 0)
+		e_speed = -e_speed
+		velocity = Vector2(e_speed, 0)
+		bx_positive = true
+	bCollidedRight = false
 
 func _on_shooting_timer_timeout():
 	var enemies = get_tree().get_nodes_in_group("gEnemy")

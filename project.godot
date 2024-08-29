@@ -15,6 +15,10 @@ run/main_scene="res://src/scenes/space_invaders.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/images/icon.svg"
 
+[autoload]
+
+BackgroundMusic="*res://src/scenes/background_music.tscn"
+
 [display]
 
 window/size/viewport_width=1400

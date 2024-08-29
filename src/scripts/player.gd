@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var lifeContainer : HBoxContainer	
 var initial_position = Vector2()
 var _bshot_timeout = true
 var _gun_fire_rate = 0.3
@@ -25,10 +26,11 @@ func shot():
 	var bullet = preload("res://src/scenes/bullet_player.tscn")
 	var new_bullet = bullet.instantiate()
 	new_bullet.position = %ShootingPoint.global_position
-	get_tree().root.add_child(new_bullet)
+	get_parent().add_child(new_bullet)
 	
 func _take_damage():
 	lives -= 1
+	lifeContainer.update_hearts(lives)
 	if lives <= 0:
 		queue_free()
 		get_parent()._stop_game("Game Over", false)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bq7y8j31iakov"]
+[gd_scene load_steps=13 format=3 uid="uid://bq7y8j31iakov"]
 
 [ext_resource type="PackedScene" uid="uid://hem7t12jskqw" path="res://src/scenes/player.tscn" id="1_0ppje"]
 [ext_resource type="Script" path="res://src/scripts/space_invaders.gd" id="1_pj881"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://d6mvuoeq84a2" path="res://src/scenes/green_enemy.tscn" id="5_lmi55"]
 [ext_resource type="PackedScene" uid="uid://bt7pjdavcgqmh" path="res://src/scenes/bullet_enemy.tscn" id="6_c6ptg"]
 [ext_resource type="FontFile" uid="uid://b54v613pddiyh" path="res://assets/fonts/Kenney Future.ttf" id="7_iuw7u"]
+[ext_resource type="Script" path="res://src/scripts/life_container.gd" id="8_i71i2"]
+[ext_resource type="Texture2D" uid="uid://dgp6s6ia4pl2x" path="res://assets/images/player.png" id="9_bb7rt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk8g0"]
 size = Vector2(45, 902.5)
@@ -32,14 +34,14 @@ shape = SubResource("RectangleShape2D_fk8g0")
 [node name="WallRitghtArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRitghtArea"]
-position = Vector2(1417, 449)
+position = Vector2(1407, 450)
 shape = SubResource("RectangleShape2D_lceyx")
 debug_color = Color(0.98805, 0, 0.306323, 0.42)
 
 [node name="WallLeftArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeftArea"]
-position = Vector2(-18, 447)
+position = Vector2(-1, 451)
 shape = SubResource("RectangleShape2D_lceyx")
 debug_color = Color(0.98805, 0, 0.306323, 0.42)
 
@@ -58,9 +60,10 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_0ppje")]
+[node name="Player" parent="." node_paths=PackedStringArray("lifeContainer") instance=ExtResource("1_0ppje")]
 position = Vector2(699, 831)
 scale = Vector2(1, 1)
+lifeContainer = NodePath("../LifeContainer")
 
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2(19, 26)
@@ -78,6 +81,16 @@ wait_time = 0.578
 unique_name_in_owner = true
 wait_time = 0.4
 autostart = true
+
+[node name="LifeContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 2.0
+offset_top = 858.0
+offset_right = 286.0
+offset_bottom = 898.0
+theme_override_constants/separation = 20
+script = ExtResource("8_i71i2")
+life_texture = ExtResource("9_bb7rt")
 
 [node name="Pause" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

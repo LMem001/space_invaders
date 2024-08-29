@@ -1,0 +1,144 @@
+[gd_scene load_steps=13 format=3 uid="uid://bq7y8j31iakov"]
+
+[ext_resource type="PackedScene" uid="uid://hem7t12jskqw" path="res://src/scenes/player.tscn" id="1_0ppje"]
+[ext_resource type="Script" path="res://src/scripts/space_invaders.gd" id="1_pj881"]
+[ext_resource type="Script" path="res://src/scripts/enemies.gd" id="2_psac7"]
+[ext_resource type="PackedScene" uid="uid://dnct6ygo7nvl8" path="res://src/scenes/red_enemy.tscn" id="3_5yt57"]
+[ext_resource type="PackedScene" uid="uid://bth1jrpmkewaw" path="res://src/scenes/yellow_enemy.tscn" id="4_jxh03"]
+[ext_resource type="PackedScene" uid="uid://d6mvuoeq84a2" path="res://src/scenes/green_enemy.tscn" id="5_lmi55"]
+[ext_resource type="PackedScene" uid="uid://bt7pjdavcgqmh" path="res://src/scenes/bullet_enemy.tscn" id="6_c6ptg"]
+[ext_resource type="FontFile" uid="uid://b54v613pddiyh" path="res://assets/fonts/Kenney Future.ttf" id="7_iuw7u"]
+[ext_resource type="Script" path="res://src/scripts/life_container.gd" id="8_i71i2"]
+[ext_resource type="Texture2D" uid="uid://dgp6s6ia4pl2x" path="res://assets/images/player.png" id="9_bb7rt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fk8g0"]
+size = Vector2(45, 902.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lceyx"]
+size = Vector2(32, 898.5)
+
+[node name="Space_Invaders" type="Node2D"]
+position = Vector2(1, 1)
+script = ExtResource("1_pj881")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-26, 448.25)
+shape = SubResource("RectangleShape2D_fk8g0")
+
+[node name="WallRight" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1424, 449)
+shape = SubResource("RectangleShape2D_fk8g0")
+
+[node name="WallRitghtArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRitghtArea"]
+position = Vector2(1417, 449)
+shape = SubResource("RectangleShape2D_lceyx")
+debug_color = Color(0.98805, 0, 0.306323, 0.42)
+
+[node name="WallLeftArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeftArea"]
+position = Vector2(-18, 447)
+shape = SubResource("RectangleShape2D_lceyx")
+debug_color = Color(0.98805, 0, 0.306323, 0.42)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." node_paths=PackedStringArray("lifeContainer") instance=ExtResource("1_0ppje")]
+position = Vector2(699, 831)
+scale = Vector2(1, 1)
+lifeContainer = NodePath("../LifeContainer")
+
+[node name="Enemies" type="Node2D" parent="."]
+position = Vector2(19, 26)
+script = ExtResource("2_psac7")
+red_enemy_scene = ExtResource("3_5yt57")
+yellow_enemy_scene = ExtResource("4_jxh03")
+green_enemy_scene = ExtResource("5_lmi55")
+bullet_scene = ExtResource("6_c6ptg")
+
+[node name="MoveDownTimer" type="Timer" parent="Enemies"]
+unique_name_in_owner = true
+wait_time = 0.578
+
+[node name="ShootingTimer" type="Timer" parent="Enemies"]
+unique_name_in_owner = true
+wait_time = 0.4
+autostart = true
+
+[node name="LifeContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 2.0
+offset_top = 858.0
+offset_right = 286.0
+offset_bottom = 898.0
+theme_override_constants/separation = 20
+script = ExtResource("8_i71i2")
+life_texture = ExtResource("9_bb7rt")
+
+[node name="Pause" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+offset_right = 1401.0
+offset_bottom = 900.0
+color = Color(0.180392, 0.180392, 0.180392, 0.85098)
+
+[node name="DescriptionLabel" type="Label" parent="Pause/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 610.0
+offset_top = 271.0
+offset_right = 825.0
+offset_bottom = 330.0
+theme_override_fonts/font = ExtResource("7_iuw7u")
+theme_override_font_sizes/font_size = 30
+text = "Game over"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Pause"]
+offset_left = 512.0
+offset_top = 371.0
+offset_right = 905.0
+offset_bottom = 562.0
+theme_override_constants/v_separation = 20
+
+[node name="ContinueButton" type="Button" parent="Pause/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_iuw7u")
+text = "Continue"
+
+[node name="RestartButton" type="Button" parent="Pause/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(393, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_iuw7u")
+text = "Restart"
+
+[connection signal="body_entered" from="WallRitghtArea" to="Enemies" method="_on_wall_ritght_area_body_entered"]
+[connection signal="body_entered" from="WallLeftArea" to="Enemies" method="_on_wall_left_area_body_entered"]
+[connection signal="timeout" from="Enemies/MoveDownTimer" to="Enemies" method="_on_move_down_timer_timeout"]
+[connection signal="timeout" from="Enemies/ShootingTimer" to="Enemies" method="_on_shooting_timer_timeout"]
+[connection signal="pressed" from="Pause/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Pause/GridContainer/RestartButton" to="." method="_on_restart_button_pressed"]

@@ -22,3 +22,5 @@ func _on_body_entered(body):
 		body._take_damage()
 	else:
 		body.queue_free()
+		if body.get_parent().has_method("_increase_speed"):
+			body.get_parent()._increase_speed()
