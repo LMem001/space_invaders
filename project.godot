@@ -18,6 +18,7 @@ config/icon="res://assets/images/icon.svg"
 [autoload]
 
 BackgroundMusic="*res://src/scenes/background_music.tscn"
+SAVELOAD="*res://src/scripts/save_load.gd"
 
 [display]
 

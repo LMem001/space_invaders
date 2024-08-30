@@ -63,15 +63,17 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." node_paths=PackedStringArray("lifeContainer") instance=ExtResource("1_0ppje")]
 position = Vector2(699, 831)
 scale = Vector2(1, 1)
-lifeContainer = NodePath("../LifeContainer")
+lifeContainer = NodePath("../Labels/LifeContainer")
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." node_paths=PackedStringArray("Points")]
+unique_name_in_owner = true
 position = Vector2(19, 26)
 script = ExtResource("2_psac7")
 red_enemy_scene = ExtResource("3_5yt57")
 yellow_enemy_scene = ExtResource("4_jxh03")
 green_enemy_scene = ExtResource("5_lmi55")
 bullet_scene = ExtResource("6_c6ptg")
+Points = NodePath("../Labels/Points")
 
 [node name="MoveDownTimer" type="Timer" parent="Enemies"]
 unique_name_in_owner = true
@@ -82,7 +84,9 @@ unique_name_in_owner = true
 wait_time = 0.4
 autostart = true
 
-[node name="LifeContainer" type="HBoxContainer" parent="."]
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="LifeContainer" type="HBoxContainer" parent="Labels"]
 unique_name_in_owner = true
 offset_left = 2.0
 offset_top = 858.0
@@ -91,6 +95,15 @@ offset_bottom = 898.0
 theme_override_constants/separation = 20
 script = ExtResource("8_i71i2")
 life_texture = ExtResource("9_bb7rt")
+
+[node name="Points" type="Label" parent="Labels"]
+offset_left = 1099.0
+offset_top = 859.0
+offset_right = 1390.0
+offset_bottom = 901.0
+theme_override_fonts/font = ExtResource("7_iuw7u")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 2
 
 [node name="Pause" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -113,6 +126,28 @@ theme_override_fonts/font = ExtResource("7_iuw7u")
 theme_override_font_sizes/font_size = 30
 text = "Game over"
 horizontal_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="Pause/ColorRect"]
+layout_mode = 0
+offset_left = 861.0
+offset_top = 13.0
+offset_right = 1132.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("7_iuw7u")
+theme_override_font_sizes/font_size = 35
+text = "High Score:"
+
+[node name="HighScore" type="Label" parent="Pause/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1143.0
+offset_top = 12.0
+offset_right = 1371.0
+offset_bottom = 86.0
+theme_override_fonts/font = ExtResource("7_iuw7u")
+theme_override_font_sizes/font_size = 35
+text = "0"
+horizontal_alignment = 2
 
 [node name="GridContainer" type="GridContainer" parent="Pause"]
 offset_left = 512.0
