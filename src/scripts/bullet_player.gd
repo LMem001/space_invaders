@@ -24,3 +24,4 @@ func _on_body_entered(body):
 		body.queue_free()
 		if body.get_parent().has_method("_increase_speed"):
 			body.get_parent()._increase_speed()
+			body.get_parent()._enemy_killed()

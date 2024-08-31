@@ -16,8 +16,9 @@ func _stop_game(label, b_continue):
 	%Pause.visible = true
 	%ContinueButton.visible = b_continue
 	%DescriptionLabel.text = label
-	if (!b_continue && %Enemies.points > SAVELOAD.high_score):
+	if (!b_continue && %Enemies.points > SAVELOAD.high_score && label == "You Won"):
 		SAVELOAD.high_score = %Enemies.points
+		%HighScore.text = str(%Enemies.points)
 		SAVELOAD.save_score()
 	get_tree().paused = true
 

@@ -12,10 +12,12 @@ var enemy_speed : float = 100.0
 var e_speed = 100
 var velocity = Vector2(e_speed, 0)
 var bCollided = false
-var num_red_enemies = 20
-var num_yellow_enemies = 20
-var num_green_enemies = 20
+var num_red_enemies = 15
+var num_yellow_enemies = 15
+var num_green_enemies = 15
+var ship_spacing = 60
 var p_distance = 1
+var tot_enemies = num_red_enemies + num_yellow_enemies + num_green_enemies
 
 func _physics_process(delta):
 	position += velocity * delta
@@ -38,7 +40,7 @@ func _move_down ():
 func add_enemies(enemy_scene, count, y_position):
 	for i in range(count):
 		var enemy_instance = enemy_scene.instantiate() 
-		enemy_instance.position = Vector2(100 + i * 50, y_position) 
+		enemy_instance.position = Vector2(100 + i * ship_spacing, y_position) 
 		add_child(enemy_instance)
 
 func _increase_speed():
@@ -64,6 +66,11 @@ func check_enemy_height():
 		# Controlla se l'altezza del nemico supera il limite
 		if enemy is CharacterBody2D and enemy.global_position.y >= height_limit:
 			get_parent()._stop_game("Game Over", false)
+
+func _enemy_killed():
+	tot_enemies -= 1
+	if (tot_enemies == 0):
+		get_parent()._stop_game("You Won", false)
 
 func _on_wall_ritght_area_body_entered(body):
 	if body.is_in_group("gEnemy") && !bCollided:
