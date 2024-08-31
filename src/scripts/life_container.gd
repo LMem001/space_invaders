@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@export var life_texture: Texture  # La texture dell'immagine del cuore
+@export var life_texture: Texture
 
 func _ready():
 	update_hearts(3)

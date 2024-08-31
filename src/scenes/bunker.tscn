@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv7bxdsuc2tms"]
+
+[ext_resource type="Texture2D" uid="uid://v0ppkp0pnhup" path="res://assets/images/bunker_damaged_2.png" id="1_p6u32"]
+[ext_resource type="Script" path="res://src/scripts/bunker.gd" id="1_t4jhi"]
+[ext_resource type="Texture2D" uid="uid://gfu3vhpu10dx" path="res://assets/images/bunker_damaged_1.png" id="1_ufyl8"]
+[ext_resource type="Texture2D" uid="uid://cdi5eh8eik035" path="res://assets/images/bunker.png" id="1_w22po"]
+
+[node name="Bunker" type="Area2D" node_paths=PackedStringArray("collision_shapes")]
+scale = Vector2(4, 4)
+script = ExtResource("1_t4jhi")
+sprites = Array[Texture]([ExtResource("1_w22po"), ExtResource("1_ufyl8"), ExtResource("1_p6u32")])
+collision_shapes = [NodePath("bunker_collision"), NodePath("bunker_collision_d1"), NodePath("bunker_collision_d2")]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("1_w22po")
+
+[node name="bunker_collision" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(16, -30, 25.25, -21.75, 25, 30, 2.25, 30.25, 2, 22.75, -0.5, 20, -2.75, 22.25, -2.79269, 30, -25.5, 30, -24.75, -22.75, -15.75, -30.25)
+
+[node name="bunker_collision_d1" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-16.25, -29.75, 4.75, -29.75, 15, -25, 24.75, -18, 25.25, 30, 17, 29.75, 16.25, 25.25, 15, 27, 13, 26.75, 13, 30, 2, 30.25, 2, 22.5, -0.5, 19.75, -2.75, 22.5, -3, 30.5, -25, 30.25, -24.75, -22)
+
+[node name="bunker_collision_d2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-24.25, -17.25, -20, -17.5, -14.5, -14.5, -17, 2.25, -13.75, 5, 14, 4.75, 16, 2, 13.75, -13.75, 13.75, -13.75, 17.25, -19.25, 24.25, -19, 25, -15.25, 25.25, 30, 17.25, 29.75, 17, 30, 17.75, 24.5, 12.75, 25.75, 13.25, 29.75, 2, 29.75, 1.75, 22.5, -0.75, 20, -3, 22.75, -3.28989, 29.8574, -25.25, 30)
