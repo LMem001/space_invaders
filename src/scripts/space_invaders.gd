@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var Mothership : PackedScene  # mothership package
+var b_from_left = true
+
 func _ready():
 	if SAVELOAD.high_score:
 		%HighScore.text = str(SAVELOAD.high_score)
@@ -25,3 +28,17 @@ func _on_continue_button_pressed():
 func _on_restart_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _on_mothership_timer_timeout():
+	var mothership_instance = Mothership.instantiate()
+	if b_from_left:
+		print("left")
+		mothership_instance.position = Vector2(20, 20)
+		mothership_instance._move_direction(30)
+		b_from_left = false
+	else:
+		print("right")
+		mothership_instance.position = Vector2(1400, 20)
+		mothership_instance._move_direction(-30)
+		b_from_left = true
+	add_child(mothership_instance)

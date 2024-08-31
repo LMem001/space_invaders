@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxf5ed5y7snm"]
+
+[ext_resource type="Script" path="res://src/scripts/mothership_enemy.gd" id="1_typil"]
+[ext_resource type="Texture2D" uid="uid://bmeij0y35kyfu" path="res://assets/images/mothership.png" id="2_2qip2"]
+
+[node name="MothershipEnemy" type="CharacterBody2D"]
+script = ExtResource("1_typil")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2qip2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(8, -10, 23, 4, 14, 10, 3, 4, 3, 7, -3, 7, -3, 4, -14, 10, -23, 3, -8, -10)

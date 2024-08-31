@@ -6,6 +6,7 @@ extends Node2D
 @export var bullet_scene : PackedScene  # Bullet package
 @export var Points : Label  # Path to the paddle node
 @export var points : int
+var height_limit = 821
 var bx_positive = true
 var enemy_speed : float = 100.0
 var e_speed = 100
@@ -21,6 +22,7 @@ func _physics_process(delta):
 	for enemy in get_children():
 		if enemy is CharacterBody2D:
 			enemy.move_and_slide()
+	check_enemy_height()
 
 func _ready():
 	# Aggiungi nemici all'avvio della scena
@@ -45,12 +47,23 @@ func _increase_speed():
 	Points.text = str(points)
 	if bx_positive == true:
 		velocity = Vector2(e_speed, 0)
-
+		
+func _add_bonus_points(bonus_points):
+	points += bonus_points
+	Points.text = str(points)
+	
 func fire_bullet(start_position: Vector2):
 	var bullet_instance = bullet_scene.instantiate()  # Crea un'istanza del proiettile
 	bullet_instance.position = start_position
 	add_child(bullet_instance)  # Aggiungi il proiettile alla scena
 	bullet_instance.velocity = Vector2(0, 300)  # Imposta la velocità del proiettile
+
+func check_enemy_height():
+	# Ottieni tutti i nemici (presupponendo che siano figli di questo nodo)
+	for enemy in get_children():
+		# Controlla se l'altezza del nemico supera il limite
+		if enemy is CharacterBody2D and enemy.global_position.y >= height_limit:
+			get_parent()._stop_game("Game Over", false)
 
 func _on_wall_ritght_area_body_entered(body):
 	if body.is_in_group("gEnemy") && !bCollided:
@@ -59,6 +72,8 @@ func _on_wall_ritght_area_body_entered(body):
 
 func _on_wall_left_area_body_entered(body):
 	if body.is_in_group("gEnemy") && !bCollided:
+		print(body)
+		print(body.get_groups())		
 		bCollided = true
 		_move_down()
 

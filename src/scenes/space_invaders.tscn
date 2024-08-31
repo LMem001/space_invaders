@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bq7y8j31iakov"]
+[gd_scene load_steps=14 format=3 uid="uid://bq7y8j31iakov"]
 
 [ext_resource type="PackedScene" uid="uid://hem7t12jskqw" path="res://src/scenes/player.tscn" id="1_0ppje"]
 [ext_resource type="Script" path="res://src/scripts/space_invaders.gd" id="1_pj881"]
+[ext_resource type="PackedScene" uid="uid://cxf5ed5y7snm" path="res://src/scenes/mothership_enemy.tscn" id="2_aepm6"]
 [ext_resource type="Script" path="res://src/scripts/enemies.gd" id="2_psac7"]
 [ext_resource type="PackedScene" uid="uid://dnct6ygo7nvl8" path="res://src/scenes/red_enemy.tscn" id="3_5yt57"]
 [ext_resource type="PackedScene" uid="uid://bth1jrpmkewaw" path="res://src/scenes/yellow_enemy.tscn" id="4_jxh03"]
@@ -12,36 +13,37 @@
 [ext_resource type="Texture2D" uid="uid://dgp6s6ia4pl2x" path="res://assets/images/player.png" id="9_bb7rt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk8g0"]
-size = Vector2(45, 902.5)
+size = Vector2(45, 755.875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lceyx"]
-size = Vector2(32, 898.5)
+size = Vector2(18.6563, 886.188)
 
 [node name="Space_Invaders" type="Node2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_pj881")
+Mothership = ExtResource("2_aepm6")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-26, 448.25)
+position = Vector2(-26, 482.938)
 shape = SubResource("RectangleShape2D_fk8g0")
 
 [node name="WallRight" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1424, 449)
+position = Vector2(1424, 487.625)
 shape = SubResource("RectangleShape2D_fk8g0")
 
 [node name="WallRitghtArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRitghtArea"]
-position = Vector2(1407, 450)
+position = Vector2(1404.69, 422.563)
 shape = SubResource("RectangleShape2D_lceyx")
 debug_color = Color(0.98805, 0, 0.306323, 0.42)
 
 [node name="WallLeftArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeftArea"]
-position = Vector2(-1, 451)
+position = Vector2(-8.67188, 445.094)
 shape = SubResource("RectangleShape2D_lceyx")
 debug_color = Color(0.98805, 0, 0.306323, 0.42)
 
@@ -49,11 +51,12 @@ debug_color = Color(0.98805, 0, 0.306323, 0.42)
 layer = -10
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.001
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -3.0
-offset_top = 1.0
+offset_top = 0.1
 offset_right = 3.0
 offset_bottom = 1.0
 grow_horizontal = 2
@@ -171,9 +174,14 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("7_iuw7u")
 text = "Restart"
 
+[node name="MothershipTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="body_entered" from="WallRitghtArea" to="Enemies" method="_on_wall_ritght_area_body_entered"]
 [connection signal="body_entered" from="WallLeftArea" to="Enemies" method="_on_wall_left_area_body_entered"]
 [connection signal="timeout" from="Enemies/MoveDownTimer" to="Enemies" method="_on_move_down_timer_timeout"]
 [connection signal="timeout" from="Enemies/ShootingTimer" to="Enemies" method="_on_shooting_timer_timeout"]
 [connection signal="pressed" from="Pause/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="Pause/GridContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="timeout" from="MothershipTimer" to="." method="_on_mothership_timer_timeout"]
