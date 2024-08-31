@@ -85,7 +85,7 @@ wait_time = 0.578
 
 [node name="ShootingTimer" type="Timer" parent="Enemies"]
 unique_name_in_owner = true
-wait_time = 0.4
+wait_time = 0.6
 autostart = true
 
 [node name="Bunkers" type="Node2D" parent="."]

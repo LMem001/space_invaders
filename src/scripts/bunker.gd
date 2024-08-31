@@ -13,7 +13,7 @@ func _take_damage():
 		_update_bunker(1)
 	elif health == 10:
 		_update_bunker(2)
-	elif health == 0:
+	elif health <= 0:
 		queue_free()  # Remove the bunker from the scene when health reaches zero
 
 func _update_bunker(stage):
