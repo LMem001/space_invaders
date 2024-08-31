@@ -9,3 +9,6 @@ script = ExtResource("2_kmx50")
 
 [node name="CollisionShape2D" parent="." index="1"]
 debug_color = Color(0, 0.600378, 0.697819, 0.42)
+
+[node name="AudioStreamPlayer" parent="." index="2"]
+autoplay = false

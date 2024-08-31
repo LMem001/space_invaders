@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dv1bpi8cy05x5"]
+[gd_scene load_steps=5 format=3 uid="uid://dv1bpi8cy05x5"]
 
 [ext_resource type="Script" path="res://src/scripts/bullet_player.gd" id="1_uhjq8"]
 [ext_resource type="Texture2D" uid="uid://bp70p1h3kpyhi" path="res://assets/images/bullet.png" id="2_xsbog"]
+[ext_resource type="AudioStream" uid="uid://bomlh3sx6wa5t" path="res://assets/sounds/mixkit-short-laser-gun-shot-1670.wav" id="3_ga5no"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ax546"]
 size = Vector2(1, 4)
@@ -15,5 +16,10 @@ texture = ExtResource("2_xsbog")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ax546")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ga5no")
+volume_db = -23.959
+autoplay = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
