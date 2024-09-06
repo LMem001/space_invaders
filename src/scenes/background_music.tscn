@@ -5,5 +5,5 @@
 [node name="Background_Music" type="AudioStreamPlayer"]
 process_mode = 3
 stream = ExtResource("1_8uq1o")
-volume_db = -31.856
+volume_db = -5.663
 autoplay = true
